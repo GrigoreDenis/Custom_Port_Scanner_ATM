@@ -27,8 +27,8 @@ STEALTH SCANNING – NULL, FIN, X-MAS.
 One of the more common and popular port scanning techniques is the TCP half-open port scan, sometimes referred to as an SYN scan. It's a fast and sneaky scan that tries to find potential open ports on the target computer. SYN packets request a response from a computer, and an ACK packet is a response
 
 type of tcp scan
-# -1 not defined
-# 0 use half-connect TCP scan
-# 1 use full-connect TCP scan
-# 2 use UDP scan
-# 3 use Stealth scan
+-1 not defined
+0 use half-connect TCP scan
+1 use full-connect TCP scan
+2 use UDP scan
+3 use Stealth scan
