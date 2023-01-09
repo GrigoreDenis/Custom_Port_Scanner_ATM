@@ -33,6 +33,7 @@ class Port_Scanner:
     os_results=[]
     port_results = [[]]
     service_results = [[]]
+    version_results = [[]]
     def check_scan_args(self):
         if self.type_of_scan!=-1:
             print("ERROR: Please use only one scan type")
@@ -119,6 +120,7 @@ class Port_Scanner:
             self.Use_Default_1000_Ports()
         self.port_results = [[0]*len(self.ports)]*len(self.hosts)
         self.service_results = [[0]*len(self.ports)]*len(self.hosts)
+        self.version_results = [[0]*len(self.ports)]*len(self.hosts)
 
     def Use_Default_1000_Ports(self):
         #Based on the type of scan that needs to be done (TCP or UDP)
@@ -164,10 +166,10 @@ class Port_Scanner:
     def Print_Results(self):
         for host_index in range (len(self.hosts)):
             print("Open ports dicovered on host %s \nWith operating system %s:" % (self.hosts[host_index], self.os_results[host_index]))
-            print("PORT\tSTATE\tSERVICE\t")
+            print("PORT\tSTATE\tSERVICE\tVERSION\t")
             for port_index in range (len(self.ports)):
                 if self.port_results[host_index][port_index]:
-                    print("%s\tOPEN\t%s\t" % (self.ports[port_index],self.service_results[host_index][port_index]))
+                    print("%s\tOPEN\t%s\t%s\t" % (self.ports[port_index],self.service_results[host_index][port_index],self.version_results[host_index][port_index]))
     def __test_port_number(self,host,host_index, port,port_index):
         ####SYN-SCAN
         # create and configure the socket
@@ -285,6 +287,7 @@ class Port_Scanner:
             thread.join()
 
         self.__Get_Services_Running()
+        
 
 
     def __Get_Operating_System(self):
@@ -309,7 +312,7 @@ class Port_Scanner:
 
     def __Get_Services_Running(self):
         for host_index in range (len(self.hosts)):
-            print("Discovering services on host %s"  % self.hosts[host_index])
+            print("Discovering services on host %s..."  % self.hosts[host_index])
             for port_index in range (len(self.ports)):
                 if self.port_results[host_index][port_index]:
                     try:
@@ -320,19 +323,57 @@ class Port_Scanner:
                     except:
                         self.ps_logger.log("Failed to get the service of port: %s" % self.ports[port_index])
                         self.service_results[host_index][port_index]="Unknown"
+                    self.version_results[host_index][port_index]=(self.__get_service_version(self.hosts[host_index],self.ports[port_index])).decode("utf-8").split("\n")[0] 
+                    
     def search_vulnerabilities(self):
-        for service in self.service_results:
-            if service:
-                vulnerabilities = []
-            
-                # Search the NVD database for vulnerabilities affecting the specified service
-                url = f'https://services.nvd.nist.gov/rest/json/cves/1.1?app_prod={service}'
-                r = requests.get(url)
-                if r.status_code == 200:
-                    data = r.json()
-                    cves = data['result']['CVE_Items']
-                    for cve in cves:
-                        cve_id = cve['cve']['CVE_data_meta']['ID']
-                        vulnerabilities.append(cve_id)
-                
-                print(vulnerabilities)
+
+        for host_index in range(len(self.hosts)):
+            for port_index in range(len(self.ports)):
+                if self.service_results[host_index][port_index]:
+                    vulnerabilities = []
+                    service = self.service_results[host_index][port_index]
+                    if self.version_results[host_index][port_index]:
+                        version = self.version_results[host_index][port_index]
+                    print("Searching vulnerabilities for %s service, version %s" % (service,version))
+                    # Search the NVD database for vulnerabilities affecting the specified service
+                    #url = f'https://services.nvd.nist.gov/rest/json/cves/1.1?app_prod={service}'
+                    url = f'https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={service} {version}' #https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=ftp
+                    r = requests.get(url)
+                    try:
+                        if r.status_code == 200:
+                            data = r.json()
+                            cves = data['vulnerabilities']
+                            for cve in cves:
+                                cve_id = cve['cve']['id']
+                                vulnerabilities.append(cve_id)
+                    except:
+                        vulnerabilities.append("Nothing was found...")
+                    if len(vulnerabilities) == 0:
+                        print("No CVE's were found for that version of the service...")
+                    else:
+                        print(vulnerabilities)
+
+    def __get_service_version(self,host, port):
+        # Create a socket and connect to the port
+        s = socket(AF_INET, SOCK_STREAM)
+        s.connect((str(host), int(port)))
+
+        # Send a request to the service and receive the response
+        request = b'GET / HTTP/1.0\r\n\r\n'
+        s.send(request)
+        response = s.recv(1024)
+
+        # Parse the response to get the version of the service
+        version = ''
+        if b'HTTP' in response:
+            # HTTP response, extract version from the "Server" header
+            headers = response.split(b'\r\n')
+            for header in headers:
+                if header.startswith(b'Server:'):
+                    version = header.split(b'/')[-1].strip()
+                    break
+        else:
+            # Non-HTTP response, use the response as the version
+            version = response
+
+        return version
