@@ -1,5 +1,6 @@
 # modules
 from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import wait #For sync of threads
 import sys
 from io import StringIO
 import logging
@@ -63,7 +64,17 @@ class Port_Scanner:
         except ValueError:
             print("Address/netmask is invalid: %s" % network)
             exit()
-
+        thread_arg_bool=False
+        for arg in arguments_system: #### Argument for threads!
+            if "-threads" in arg:
+                nr_threads_str =arg[2:].split("=")[1]
+                nr_threads = int(nr_threads_str)
+                self.executor = ThreadPoolExecutor(nr_threads)
+                print("Number of threads selected: %s" % nr_threads_str)
+                thread_arg_bool=True
+        if thread_arg_bool == False:
+            self.executor = ThreadPoolExecutor(5)
+            print("Number of threads selected default: 5")
 
         print("Network given:\n",ip_net)
 
@@ -247,14 +258,17 @@ class Port_Scanner:
 
 
     def __scan(self,host,host_index,ports):
-        self.ps_logger.log("TCP full connect scanning: %s" % host)
+        self.ps_logger.log("Start scanning: %s" % host)
         threads_scan = list()
-        for port_index in range (len(ports)):
-            thread_scan = threading.Thread(target=self.__test_port_number, args=(host,host_index,ports[port_index],port_index,))
-            threads_scan.append(thread_scan)
-            thread_scan.start()
-        for i,thread_scan in enumerate(threads_scan):
-            thread_scan.join()
+        #for port_index in range (len(ports)):
+            #thread_scan = threading.Thread(target=self.__test_port_number, args=(host,host_index,ports[port_index],port_index,))
+            #threads_scan.append(thread_scan)
+            #thread_scan.start()
+
+
+        workers = [self.executor.submit(self.__test_port_number, host,host_index,ports[port_index],port_index) for port_index in range (len(ports))]
+        #print(workers.done()) #futures = [executor.submit(task, i) for i in range(10)]
+        wait(workers)
 
     def Start_Port_Scanning(self):
         threads = list()
@@ -290,7 +304,7 @@ class Port_Scanner:
         
 
 
-    def __Get_Operating_System(self):
+    def __Get_Operating_System(self): #outdated, mai actual!!!
         for host_index in range(len(self.hosts)):
             os = ''
             target = str(self.hosts[host_index])
@@ -337,7 +351,7 @@ class Port_Scanner:
                     print("Searching vulnerabilities for %s service, version %s" % (service,version))
                     # Search the NVD database for vulnerabilities affecting the specified service
                     #url = f'https://services.nvd.nist.gov/rest/json/cves/1.1?app_prod={service}'
-                    url = f'https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={service} {version}' #https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=ftp
+                    url = f'https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch={version}' #https://services.nvd.nist.gov/rest/json/cves/2.0?keywordSearch=ftp
                     r = requests.get(url)
                     try:
                         if r.status_code == 200:
