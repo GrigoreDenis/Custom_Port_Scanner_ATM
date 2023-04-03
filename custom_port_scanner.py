@@ -365,7 +365,7 @@ class Port_Scanner:
                     except:
                         self.ps_logger.log("Failed to get the service of port: %s" % self.ports[port_index])
                         self.service_results[host_index][port_index]="Unknown"
-                    self.version_results[host_index][port_index]=(self.__get_service_version(self.hosts[host_index],self.ports[port_index])).decode("utf-8").split("\n")[0] 
+                    self.version_results[host_index][port_index]=(self.__get_service_version(self.hosts[host_index],self.ports[port_index]))
                     
     def search_vulnerabilities(self):
 
@@ -412,10 +412,20 @@ class Port_Scanner:
             headers = response.split(b'\r\n')
             for header in headers:
                 if header.startswith(b'Server:'):
-                    version = header.split(b'/')[-1].strip()
+                    version = header.split(b'/')[-1].strip().decode("utf-8").split("\n")[0] 
                     break
         else:
             # Non-HTTP response, use the response as the version
-            version = response
+            version = response.decode("utf-8").split("\n")[0] 
 
         return version
+    
+    def GetServices(self):
+        return self.service_results
+    def GetPorts(self):
+        return self.port_results
+    def GetHosts(self):
+        return self.hosts
+    def GetOnlineResults(self):
+        return self.checkalive_binary_results
+    

@@ -1,8 +1,13 @@
+import os
 from custom_port_scanner import Port_Scanner
 from FingerPrinter.FingerPrinter import FingerPrinter
 from logger import logger
 import sys
 import sys
+from CveFinder import CveFinder
+if os.geteuid() != 0:       #Checks for root
+    exit("You need to have root privileges to run this framework.\nPlease try again, this time using 'sudo'. Exiting.")
+
 try:
     network=sys.argv[1]
 except:
@@ -51,6 +56,39 @@ scanner.Start_Port_Scanning()
 
 scanner.Print_Results()
 
-scanner.search_vulnerabilities()
+#scanner.search_vulnerabilities()
 
-fingerprinter = FingerPrinter(network,sys.argv)
+#Extract service and port results to be used by FingerPrinter & CveFinder
+
+hosts = scanner.GetHosts()
+ports = scanner.GetPorts()
+online_hosts = scanner.GetOnlineResults()
+services = scanner.GetServices()
+
+# for host_index in range(len(hosts)):
+#     for port_index in range(len(hosts)): #TODO -> lista http/ ia din srv | NR 13|17 in TODO.txt
+
+fingerprinter = FingerPrinter(hosts,ports,online_hosts,services,sys.argv)
+
+cve_ports = fingerprinter.GetPorts()
+cve_hosts = fingerprinter.GetHosts()
+cve_hostnames = fingerprinter.GetHostnames()
+cve_techs = fingerprinter.GetTechs()
+cve_versions = fingerprinter.GetVersions()
+cve_len = fingerprinter.GetLen()
+
+for index in range(cve_len):
+    Cve_Finder = CveFinder(cve_techs[index],cve_versions[index])
+    #Cve_Finder.Print_Potential_Cves()
+    Cve_Finder.Confirm_Vulnerabilities(cve_hosts[index],cve_hostnames[index],cve_ports[index])
+
+
+
+    # def GetServices(self):
+    #     return self.service_results
+    # def GetPorts(self):
+    #     return self.port_results
+    # def GetHosts(self):
+    #     return self.hosts
+    # def GetOnlineResults(self):
+    #     return self.checkalive_binary_results
