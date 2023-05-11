@@ -8,9 +8,11 @@ import ipaddress
 import sys
 import threading
 import os
+import subprocess
 #import socket #IMPORTANT: import socket primul dupa from socket import | altfel nu merge port scanning!
 from socket import AF_INET
 from socket import SOCK_STREAM
+from socket import SOCK_DGRAM
 from socket import socket
 from socket import getservbyport
 from socket import gethostbyaddr # for DNS checkalive
@@ -21,6 +23,8 @@ from scapy.layers.inet import Ether, IP, TCP, ICMP, UDP
 from scapy.sendrecv import send, sr1
 from scapy.all import RandShort
 import logger
+
+
 
 class Port_Scanner:
     semaphore = threading.Semaphore(5) #permitem doar 5 de threaduri la rularea HALF CONNECT, comportament impredictibil altfel....
@@ -80,6 +84,7 @@ class Port_Scanner:
 
         # get hosts
         self.hosts = list(ip_net.hosts())
+        self.possible_hosts = list(ip_net.hosts())
 
         print("Hosts given:\n",self.hosts)
         self.os_results=[0]*len(self.hosts)
@@ -118,7 +123,7 @@ class Port_Scanner:
                     hyphen_inside = True
                     ports_split = port_range.split("-")
                     start = int(ports_split[0])
-                    end = int(ports_split[1])
+                    end = int(ports_split[1])+1
                     for i in range(start, end):
                         self.ports.append(str(i))
                 else:
@@ -147,37 +152,41 @@ class Port_Scanner:
             self.ports = Lines[0].split(",")
 
     def __ThreadPing(self,host,host_id):
+        
         if self.checkalive_binary_results[host_id] == 0:
-            self.ps_logger.log("Ping probing: %s" % host)
-            command_string='ping -c 5 ' + str(host)
-            tmp_res = os.popen(command_string)
-            self.results[host_id]=(tmp_res.read())
-            if "100% packet loss" in str(self.results[host_id]):
-                if self.checkalive_binary_results[host_id] == 1:
-                    print(str(self.hosts[host_id]), "Filters ICMP pachets")
+            try:
+                self.ps_logger.log("Ping probing: %s" % host)
+                command_string='ping -c 5 ' + str(host)
+                tmp_res = os.popen(command_string)
+                self.results[host_id]=(tmp_res.read())
+                if "100% packet loss" in str(self.results[host_id]):
+                    if self.checkalive_binary_results[host_id] == 1:
+                        print(str(self.hosts[host_id]), "Filters ICMP pachets")
+                    else:
+                        print(str(self.hosts[host_id]), "is Offline")
+                elif "Request timed out" in str(self.results[host_id]):
+                    if self.checkalive_binary_results[host_id] == 1:
+                        print(str(self.hosts[host_id]), "Filters ICMP pachets")
+                    else:
+                        print(str(self.hosts[host_id]), "is Offline")
                 else:
-                    print(str(self.hosts[host_id]), "is Offline")
-            elif "Request timed out" in str(self.results[host_id]):
-                if self.checkalive_binary_results[host_id] == 1:
-                    print(str(self.hosts[host_id]), "Filters ICMP pachets")
-                else:
-                    print(str(self.hosts[host_id]), "is Offline")
-            else:
-                print(str(self.hosts[host_id]), "is Online")
-                self.checkalive_binary_results[host_id]=1
+                    print(str(self.hosts[host_id]), "is Online")
+                    self.checkalive_binary_results[host_id]=1
+            except:
+                print(str(self.hosts[host_id]), "is Offline")
         else:
             print(str(self.hosts[host_id]), "is Online")
 
     def __DNS_CheckAlive(self,host,host_id):
             self.ps_logger.log("DNS probing: %s" % host)
-        #try:
-            response = gethostbyaddr(host)
-            # self.results[host_id] =response[0]
-            self.checkalive_binary_results[host_id]=1
-            self.ps_logger.log("Host with address %s has reverse DNS" % host)
-            print("We found host %s to have DNS response: %s" % (host,response[0]))
-        #except:
-            #self.ps_logger.log("Host with address %s has no DNS response" % host)
+            try:
+                response = gethostbyaddr(host)
+                # self.results[host_id] =response[0]
+                self.checkalive_binary_results[host_id]=1
+                self.ps_logger.log("Host with address %s has reverse DNS" % host)
+                print("We found host %s to have DNS response: %s" % (host,response[0]))
+            except:
+                self.ps_logger.log("Host with address %s has no DNS response" % host)
 
     def CheckAlive(self): #WIll use DNS-checkalive and Ping_scan_hosts as well
 
@@ -193,7 +202,18 @@ class Port_Scanner:
         wait(workers)
         self.ps_logger.log("Ending ping probing")
 
+        self.__Clean_Hosts_List_Of_Offline(self.hosts,self.checkalive_binary_results)
+        
         self.__Get_Operating_System()
+
+    def __Clean_Hosts_List_Of_Offline(self,hosts,checkalive_binary_results):
+        for index in range(len(checkalive_binary_results)):
+            if checkalive_binary_results[index]==0:
+                del hosts[index]
+            if not hosts:
+                print("All hosts given are offline, quiting...")
+                quit()
+        
 
 
 
@@ -216,7 +236,7 @@ class Port_Scanner:
             result=sr1(packet, timeout =5,iface="eth0",verbose=False) # GLOBAL_TIMEOUT DOESN'T APPLY HERE
             #includes flags: SA for SYN-ACK
             #Redirect output of print to variable 'capture'
-            self.semaphore.acquire()
+            #self.semaphore.acquire()
             try:
                 answered = result[0]
                 #unanswered = result[1]
@@ -234,8 +254,8 @@ class Port_Scanner:
             except:
                 self.ps_logger.log("Host %s /Port: %s did not respond at all"% (host,port,))
                 pass
-            finally:
-                self.semaphore.release()
+            # finally:
+            #     self.semaphore.release()
     ####CONNECT-SCAN
         elif self.type_of_scan==1:
             self.ps_logger.log("TCP full connect scanning port number: %s in host: %s" % (port,host))
@@ -254,26 +274,45 @@ class Port_Scanner:
                     pass
     ####UDP SCAN --------- TO BE TESTED
         elif self.type_of_scan==2:
-            self.semaphoreUDP.acquire()
-            self.ps_logger.log("UDP scanning port number: %s in host: %s" % (port,host))
-            ip_scan_packet = IP(dst=str(host))
-            udp_scan_packet = UDP(dport=int(self.ports[port_index]))
-            scan_packet = ip_scan_packet/udp_scan_packet
-            scan_response = sr1(scan_packet,timeout=5,verbose=0)
-            try:
-                if scan_response is None:
-                    if len(scan_response)==0:
-                        self.ps_logger.log("We found UDP port: %s to be filtered" % port)
-                    else:
-                        self.ps_logger.log("Succesfully connected to UDP port: %s" % port)
-                        self.port_results[host_index][port_index]=port
-                else:
-                    self.ps_logger.log("We found UDP port: %s to be closed" % port)
-            except:
+            command = "nc -z -v -u -w " + str(self.GLOBAL_TIME_OUT) + " " + str(host) + " " + port
+            out = os.system(command)
+            # proc = subprocess.Popen(command, stdout=subprocess.PIPE, shell=True)
+            # (out, err) = proc.communicate()
+            # print(out)
+
+            if out == 0:    #=> connect succesful
+                self.port_results[host_index][port_index]=port
+                self.ps_logger.log("Succesfully connected to UDP port: %s" % port)
+            elif out == 256:
                 self.ps_logger.log("We found UDP port: %s to be closed" % port)
-                pass
-            finally:
-                self.semaphoreUDP.release()
+            else:
+                self.ps_logger.log("We found UDP port: %s to be filtered" % port)
+            #  nc -z -v -u -w 1 localhost 5005
+            # Connection to localhost 5005 port [udp/*] succeeded!
+
+            #     -w pt timeout ( -w 1 => timeout 1 secunda)
+            # # self.semaphoreUDP.acquire()
+            # self.ps_logger.log("UDP scanning port number: %s in host: %s" % (port,host))
+            # ip_scan_packet = IP(dst=str(host))
+            # udp_scan_packet = UDP(dport=int(self.ports[port_index]))
+            # scan_packet = ip_scan_packet/udp_scan_packet
+            # scan_response = sr1(scan_packet,timeout=5,verbose=0)
+            # try:
+            #     if scan_response is None:
+            #         if len(scan_response)==0:
+            #             self.ps_logger.log("We found UDP port: %s to be filtered" % port)
+            #         else:
+            #             self.ps_logger.log("Succesfully connected to UDP port: %s" % port)
+            #             self.port_results[host_index][port_index]=port
+            #     else:
+            #         self.ps_logger.log("We found UDP port: %s to be closed" % port)
+            # except:
+            #     self.ps_logger.log("We found UDP port: %s to be closed" % port)
+            #     pass
+            # finally:
+            #     self.semaphoreUDP.release()
+
+
         else:
             print("ERROR: type of scan undefined/wrong")
             quit()
@@ -357,8 +396,12 @@ class Port_Scanner:
             print("Discovering services on host %s..."  % self.hosts[host_index])
             for port_index in range (len(self.ports)):
                 if self.port_results[host_index][port_index]:
+                    if self.type_of_scan==2: #UDP scan
+                        protocolname = 'udp'
+                    else:
+                        protocolname='tcp'
                     try:
-                        protocolname = 'tcp' 
+                        # protocolname = 'tcp' 
                         service = getservbyport(int(self.ports[port_index]),protocolname)
                         self.ps_logger.log("Succesfully got service of port: %s" % self.ports[port_index])
                         self.service_results[host_index][port_index]=str(service)
@@ -397,28 +440,37 @@ class Port_Scanner:
 
     def __get_service_version(self,host, port):
         # Create a socket and connect to the port
-        s = socket(AF_INET, SOCK_STREAM)
-        s.connect((str(host), int(port)))
+        try:
+            if self.type_of_scan == 2:
+                s = socket(AF_INET, SOCK_DGRAM)
+                s.connect((str(host), int(port)))
 
-        # Send a request to the service and receive the response
-        request = b'GET / HTTP/1.0\r\n\r\n'
-        s.send(request)
-        response = s.recv(1024)
+                s.settimeout(10)
+            else:
+                s = socket(AF_INET, SOCK_STREAM)
+                s.connect((str(host), int(port))) #it can fail and throws error
 
-        # Parse the response to get the version of the service
-        version = ''
-        if b'HTTP' in response:
-            # HTTP response, extract version from the "Server" header
-            headers = response.split(b'\r\n')
-            for header in headers:
-                if header.startswith(b'Server:'):
-                    version = header.split(b'/')[-1].strip().decode("utf-8").split("\n")[0] 
-                    break
-        else:
-            # Non-HTTP response, use the response as the version
-            version = response.decode("utf-8").split("\n")[0] 
+            # Send a request to the service and receive the response
+            request = b'GET / HTTP/1.0\r\n\r\n'
+            s.send(request)
+            response = s.recv(1024)
 
-        return version
+            # Parse the response to get the version of the service
+            version = ''
+            if b'HTTP' in response:
+                # HTTP response, extract version from the "Server" header
+                headers = response.split(b'\r\n')
+                for header in headers:
+                    if header.startswith(b'Server:'):
+                        version = header.split(b'/')[-1].strip().decode("utf-8").split("\n")[0] 
+                        break
+            else:
+                # Non-HTTP response, use the response as the version
+                version = response.decode("utf-8").split("\n")[0] 
+
+            return version
+        except:
+            return "Unknown"
     
     def GetServices(self):
         return self.service_results
@@ -429,3 +481,4 @@ class Port_Scanner:
     def GetOnlineResults(self):
         return self.checkalive_binary_results
     
+

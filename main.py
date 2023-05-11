@@ -1,6 +1,7 @@
 import os
 from custom_port_scanner import Port_Scanner
 from FingerPrinter.FingerPrinter import FingerPrinter
+from Enumerator import Enumerator
 from logger import logger
 import sys
 import sys
@@ -50,8 +51,6 @@ scanner.Get_Port_Arguments(sys.argv)
 
 scanner.CheckAlive()
 
-#scanner.Use_Default_1000_Ports()
-
 scanner.Start_Port_Scanning()
 
 scanner.Print_Results()
@@ -67,6 +66,11 @@ services = scanner.GetServices()
 
 # for host_index in range(len(hosts)):
 #     for port_index in range(len(hosts)): #TODO -> lista http/ ia din srv | NR 13|17 in TODO.txt
+print(hosts)
+for host in hosts:
+    enumerator = Enumerator(host)
+    enumerator._WhoIs()
+
 
 fingerprinter = FingerPrinter(hosts,ports,online_hosts,services,sys.argv)
 
@@ -76,11 +80,18 @@ cve_hostnames = fingerprinter.GetHostnames()
 cve_techs = fingerprinter.GetTechs()
 cve_versions = fingerprinter.GetVersions()
 cve_len = fingerprinter.GetLen()
+cve_urls = fingerprinter.GetURLs()
+
+
+# for index in range(cve_len): #DIRBUSTER DUPA FINGERPRINTER, DOAR PE HTTP
+Enumerator.DirBuster(cve_urls) #https://github.com/digination/dirbuster-ng/blob/master/wordlists/common.txt 
+                                                            #For testing purposes
 
 for index in range(cve_len):
     Cve_Finder = CveFinder(cve_techs[index],cve_versions[index])
     #Cve_Finder.Print_Potential_Cves()
-    Cve_Finder.Confirm_Vulnerabilities(cve_hosts[index],cve_hostnames[index],cve_ports[index])
+    Cve_Finder.Confirm_Vulnerabilities(cve_hosts[index],cve_hostnames[index],cve_ports[index],cve_urls[index])
+    Cve_Finder.Print_Positive_CVEs() #print if there are any
 
 
 
