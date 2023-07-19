@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Main Framework Expanded</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='nicepage.css') }}" media="screen">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Main-Framework.css') }}">
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='nicepage.js') }}" defer=""></script>
+    <meta name="generator" content="Nicepage 5.10.8, nicepage.com">
+    <meta name="referrer" content="origin">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i|Wallpoet:400|Kumar+One+Outline:400">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/10764381.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Main Framework">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-7953"><a href="{{ url_for('main') }}" class="u-image u-logo u-image-1" title="Home" data-image-width="624" data-image-height="620">
+        <img src="{{ url_for('static', filename='images/10764381.png') }} " class="u-logo-image u-logo-image-1">
+      </a><p class="u-align-left u-custom-font u-text u-text-palette-4-base u-text-1">Automate​d Pentest Framework<br>
+      </p><nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+        <div class="menu-collapse u-custom-font" style="font-size: 1.25rem; letter-spacing: 0px; font-family: Wallpoet; font-weight: 400; text-transform: uppercase;">
+          <a class="u-button-style u-custom-border u-custom-border-color u-custom-borders u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('main') }}" style="padding: 22px 0px;">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Finder') }}" style="padding: 22px 0px;">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('CVE_classification') }}" style="padding: 22px 0px;">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Fuzzing') }}" style="padding: 22px 0px;">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('History') }}" style="padding: 22px 0px;">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Help') }}" style="padding: 22px 0px;">Help</a>
+</li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('main') }}">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Finder') }}">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('CVE_classification') }}">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Fuzzing') }}">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('History') }}">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Help') }}">Help</a>
+</li></ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+      </nav></header>
+    <section class="u-clearfix u-image u-shading u-section-1" id="sec-804d" data-image-width="1920" data-image-height="1080">
+      
+      <div class="u-border-2 u-border-grey-75 u-container-style u-group u-image u-opacity u-opacity-70 u-shading u-shape-rectangle u-image-1" data-image-width="1920" data-image-height="1080">
+        <div class="u-container-layout u-container-layout-1">
+          <p class="u-align-center u-custom-font u-text u-text-default u-text-palette-4-base u-text-1">Checkalive output:</p>
+          <p class="u-align-left u-custom-font u-font-courier-new u-text u-text-palette-4-base u-text-2">
+
+            <br>Network given: <br> 142.250.186.78/32 <br>Hosts given: <br> [IPv4Address('142.250.186.78')] <br>&nbsp;<br>We found host 142.250.186.78 to have DNS response: fra24s05-in-f14.1e100.net <br>142.250.186.78 is Online <br>
+            <span class="u-text-palette-5-base">&nbsp;</span>
+            <br>Open ports dicovered on host 142.250.186.78 <br>With operating system 0:<br>
+          
+          </p>
+        </div>
+      </div>
+      <div class="u-border-2 u-border-grey-75 u-container-style u-group u-image u-opacity u-opacity-70 u-shading u-shape-rectangle u-image-2" data-image-width="2048" data-image-height="1078">
+        <div class="u-container-layout u-container-layout-2">
+          <p class="u-align-center u-custom-font u-text u-text-custom-color-6 u-text-default u-text-3">fingerprinter output:</p>
+          <p class="u-align-left u-custom-font u-font-courier-new u-text u-text-palette-4-base u-text-4">Following url is a valid HTTP service http://127.0.0.1:8088 <br> Got response status: 200 <br>
+            <br>http://127.0.0.1:8088: Got success code:200 <br>Technology used given by WhatWeb output for port 8088 : <span class="u-text-custom-color-5">Apache/2.4.49 </span>
+            <br>
+            <br>
+            <br>Following url is a valid HTTP service http://127.0.0.1:8188 <br> Got response status: 200 <br>
+            <br>http://127.0.0.1:8188: Got success code:200 <br>Technology used given by WhatWeb output for port 8188 : <span class="u-text-custom-color-5">Apache/2.4.49 </span>
+            <br>
+            <br>
+            <br>['http://127.0.0.1:8088', 'http://127.0.0.1:8188']
+          </p>
+        </div>
+      </div>
+      <div class="u-border-2 u-border-grey-75 u-container-style u-group u-image u-opacity u-opacity-70 u-shading u-shape-rectangle u-image-3" data-image-width="2048" data-image-height="1078">
+        <div class="u-container-layout u-valign-top u-container-layout-3">
+          <p class="u-align-center u-custom-font u-text u-text-custom-color-4 u-text-default u-text-5">port scanner output:</p>
+          <p class="u-align-left u-custom-font u-font-courier-new u-hover-feature u-text u-text-palette-4-base u-text-6">
+            <span class="u-text-palette-3-base">142.250.186.78 DNS fra24s05-in-f14.1e100.net </span>
+            <br>
+            <br>
+            <span class="u-text-custom-color-4">PORT    STATE   SERVICE VERSION <br>21      OPEN    ftp <br>22      OPEN    ssh <br>5006    OPEN    Unknown <br>8088    OPEN    omniorb 2.4.49 (Unix) <br>8188    OPEN    Unknown 2.4.49 (Unix)
+            </span>
+            <br>
+          </p>
+        </div>
+      </div>
+      <p class="u-align-center u-custom-font u-text u-text-default u-text-palette-4-base u-text-7">Choose target network<br>and specifications:
+      </p>
+      <div class="u-form u-form-1">
+        <form action="https://forms.nicepagesrv.com/v2/form/process" class="u-clearfix u-form-spacing-0 u-form-vertical u-inner-form" source="email" name="form" style="padding: 10px;">
+          <div class="u-form-group u-label-top u-form-group-1">
+            <label for="name-99ff" class="u-custom-font u-label u-text-palette-4-base u-label-1">Network</label>
+            <input pattern="\b(?:(?:\d{1,3}\.){3}\d{1,3}(?:/\d{1,2})?|(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}(?:/\d{1,3})?)\b" placeholder="172.0.0.0/21" id="name-99ff" name="network" class="u-black u-border-2 u-border-palette-4-base u-input u-input-rectangle u-radius-50 u-text-palette-4-base" required="required" type="text">
+          </div>
+          <div class="u-form-group u-form-radiobutton u-label-top u-form-group-2">
+            <label class="u-custom-font u-label u-text-palette-4-base u-label-2">Type of scan</label>
+            <div class="u-form-radio-button-wrapper">
+              <div class="u-input-row">
+                <input id="field-1d0a" type="radio" name="radiobutton" value="tcs" class="u-field-input" checked="checked" data-calc="tcs" required="required">
+                <label class="u-custom-font u-field-label u-font-courier-new" for="field-1d0a">TCP Full Connect Scan</label>
+              </div>
+              <div class="u-input-row">
+                <input id="field-7b17" type="radio" name="radiobutton" value="ths" class="u-field-input" data-calc="ths" required="required">
+                <label class="u-custom-font u-field-label u-font-courier-new" for="field-7b17">TCP Half Connect Scan</label>
+              </div>
+              <div class="u-input-row">
+                <input id="field-6fc8" type="radio" name="radiobutton" value="udp" class="u-field-input" data-calc="udp" required="required">
+                <label class="u-custom-font u-field-label u-font-courier-new" for="field-6fc8">UDP Connect Scan</label>
+              </div>
+            </div>
+          </div>
+          <div class="u-form-group u-form-number u-form-number-layout-range-number u-label-top u-form-group-3">
+            <label for="range-6771" class="u-custom-font u-label u-text-palette-4-base u-label-3">Threads</label>
+            <div class="u-input-row" data-value="5">
+              <input value="5" min="1" max="100" step="1" type="range" placeholder="" id="range-6771" name="thread_range" class="u-input u-range">
+              <input type="number" placeholder="" id="number-range-6771" class="u-black u-border-2 u-border-palette-4-base u-input u-input-rectangle u-radius-50 u-text-palette-4-base" min="1" max="100" step="1" value="5" name="thread_range">
+            </div>
+          </div>
+          <div class="u-form-group u-form-number u-form-number-layout-number u-label-top u-form-group-4">
+            <label for="number-33eb" class="u-custom-font u-label u-text-palette-4-base u-label-4">Global timeout (seconds)</label>
+            <div class="u-input-row" data-value="5">
+              <input value="5" min="0" max="20" step="1" type="number" placeholder="" id="number-33eb" name="number" class="u-black u-border-2 u-border-palette-4-base u-input u-input-rectangle u-radius-50 u-text-palette-4-base">
+            </div>
+          </div>
+          <div class="u-form-group u-label-top u-form-group-5">
+            <label for="text-f139" class="u-custom-font u-label u-text-palette-4-base u-label-5">Port range (not required)</label>
+            <input type="text" id="text-f139" name="text" class="u-black u-border-2 u-border-palette-4-base u-input u-input-rectangle u-radius-50 u-text-palette-4-base" placeholder="ex: 80-443,8080,9000-9090">
+          </div>
+          <div class="u-form-checkbox u-form-group u-label-top u-form-group-6">
+            <input type="checkbox" id="checkbox-c11d" name="checkbox" value="On" class="u-active-palette-4-base u-border-2 u-border-palette-4-base u-field-input u-hover-palette-4-base">
+            <label for="checkbox-c11d" class="u-custom-font u-field-label u-font-courier-new">Overwrite last report</label>
+          </div>
+          <div class="u-form-group u-form-submit u-label-top u-form-group-7">
+            <input type="submit" value="submit" class="u-form-control-hidden">
+            <a href="#" class="u-active-palette-4-base u-black u-border-2 u-border-active-black u-border-hover-black u-border-palette-4-base u-btn u-btn-round u-btn-submit u-button-style u-custom-font u-hover-palette-4-base u-radius-50 u-text-active-black u-text-hover-black u-text-palette-4-base u-btn-1">Restart Attack</a>
+          </div>
+          <div class="u-form-send-message u-form-send-success"> Thank you! Your message has been sent. </div>
+          <div class="u-form-send-error u-form-send-message"> Unable to send your message. Please fix errors then try again. </div>
+          <input type="hidden" value="" name="recaptchaResponse">
+          <input type="hidden" name="formServices" value="4234c3a3452bc8c35cfa85b94716ca98">
+        </form>
+      </div>
+      <div class="u-border-2 u-border-grey-75 u-container-style u-expanded-width u-group u-image u-opacity u-opacity-70 u-shading u-shape-rectangle u-image-4" data-image-width="2048" data-image-height="1078">
+        <div class="u-container-layout u-container-layout-4">
+          <p class="u-align-center u-custom-font u-text u-text-default u-text-palette-2-base u-text-8">CVE finder output:</p>
+          <p class="u-align-left u-custom-font u-font-courier-new u-text u-text-palette-4-base u-text-9"> The following host: 127.0.0.1 <br>Technology: Apache <br>Version: 2.4.49 <br>Port: 8088 <br>Vulnerable to cves/2021/CVE-2021-41773.yaml<br>
+            <br>The following host: 127.0.0.1 <br>Technology: Apache <br>Version: 2.4.49 <br>Port: 8188 <br>Vulnerable to cves/2021/CVE-2021-41773.yaml <br>
+            <br>The following host: 127.0.0.1 <br>Technology: Apache <br>Version: 2.4.49 <br>Port: 8188 <br>Vulnerable to cves/2021/CVE-2021-42013.yaml
+          </p>
+        </div>
+      </div>
+    </section>
+    
+  
+</body></html>

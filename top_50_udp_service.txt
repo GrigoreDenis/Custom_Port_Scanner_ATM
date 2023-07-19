@@ -1,0 +1,52 @@
+Port    Service Name	Default UDP Timeout
+53	    DNS	        30 seconds
+67	    DHCP Server	60 seconds
+68	    DHCP Client	60 seconds
+69	    TFTP	    N/A
+123	    NTP     	1-2 minutes
+137	    NetBIOS Name Service	N/A
+138 	NetBIOS Datagram Service	N/A
+161	    SNMP	    N/A
+162 	SNMP Traps	N/A
+389 	LDAP	    N/A
+443	    HTTPS	    30 seconds
+514	    Syslog	    N/A
+520	    RIP	        N/A
+546	    DHCPv6 Client	60 seconds
+547	    DHCPv6 Server	60 seconds
+631	    IPP	        N/A
+996	    VSINET	    N/A
+1080	Socks Proxy	N/A
+1234	VLC	        N/A
+1434	SQL Server Browser	N/A
+1645	RADIUS	N/A
+1646	RADIUS	N/A
+1701	L2TP	N/A
+1812	RADIUS	N/A
+1813	RADIUS	N/A
+1900	SSDP	N/A
+2000	Cisco SCCP	N/A
+2049	NFS	N/A
+2086	WHM/CPANEL	N/A
+2087	WHM/CPANEL	N/A
+2161	AP CTS	N/A
+2261	CoMotion	N/A
+2345	FTLI	N/A
+3260	iSCSI Target	N/A
+3478	STUN	N/A
+3544	Teredo	N/A
+3659	Apple SASL	N/A
+3702	WS-Discovery	N/A
+4500	IPSec NAT-T	N/A
+5060	SIP	N/A
+5061	SIP-TLS	N/A
+5353	mDNS	N/A
+5432	PostgreSQL	N/A
+5632	PCAnywhere	N/A
+5678	Remote Replication Utility	N/A
+6000	X11	N/A
+6101	Backup Exec Agent Browser	N/A
+7000	AFP	N/A
+7001	WebLogic	N/A
+8000	HTTP Alt	30 seconds
+9000	Buffalo LinkStation NAS	N/A

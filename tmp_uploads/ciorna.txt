@@ -1,0 +1,95 @@
+Programarea de testare a penetrării (pentest) este procesul de a evalua securitatea unui sistem informatic prin simularea unei amenințări reale. Scopul pentest-ului este de a identifica vulnerabilitățile sistemului și de a oferi măsuri de îmbunătățire a securității.
+Arhitectura generală a unui program de pentest poate include următoarele etape:
+Planificarea: în această etapă se definește obiectivul pentest-ului, se alege echipa și se stabilește un plan de acțiune.
+Recunoașterea: în această etapă se colectează informații despre sistemul țintă, cum ar fi configurația rețelei, tipurile de echipamente și software-ul utilizat.
+Explorarea: în această etapă se încearcă să se acceseze sistemul prin diverse metode, cum ar fi scanarea rețelei și exploatarea vulnerabilităților.
+Analiza: în această etapă se evaluează informațiile colectate și se identifică vulnerabilitățile sistemului.
+Raportarea: în această etapă se întocmește un raport care descrie vulnerabilitățile identificate și se sugerează măsuri de îmbunătățire a securității.
+Remedierea: în această etapă se implementează măsurile de îmbunătățire a securității sugerate în raportul de pentest.
+Acestea sunt etapele generale ale unui program de pentest, dar procesul poate varia în funcție de obiectivele și scopurile specifice ale fiecărui pentest
+
+
+
+Există o mulțime de medii și metode prin care atacurile cibernetice pot avea loc. Un mediu comun pentru atacuri cibernetice este internetul, prin intermediul căruia atacatorii pot accesa și ataca sisteme și rețele de la distanță. Alte medii prin care pot avea loc atacuri cibernetice includ rețelele interne ale unei organizații, rețelele wireless, dispozitivele mobile și chiar sistemele fizice, cum ar fi sistemele de control al proceselor industriale.
+
+În ceea ce privește metodele de atac, acestea pot varia de la atacuri simple, cum ar fi phishing-ul, la atacuri complexe care implică exploatarea vulnerabilităților de securitate și apararea împotriva acestora. Alte tipuri comune de atacuri cibernetice includ:
+
+Atacuri de tip malware: Acestea implică instalarea unui software dăunător pe un sistem, care poate culege informații sensibile sau poate distruge sistemul.
+
+Atacuri de tip negare a serviciilor: Acestea sunt proiectate să blocheze accesul la un sistem sau serviciu, fie prin suprasolicitarea acestuia, fie prin blocarea accesului la rețea.
+
+Atacuri de tip răspândire de virus: Acestea sunt proiectate să se răspândească rapid de la un sistem la altul, infectând cât mai multe dispozitive posibil.
+
+Atacuri de tip phishing: Acestea sunt încercări de a obține informații sensibile prin intermediul unor e-mailuri sau mesaje de text aparent legitim, care încearcă să îi convingă pe utilizatori să furnizeze informații personale sau să acceseze un link periculos.
+
+Acestea sunt doar câteva exemple de medii și metode prin care pot avea loc atacuri cibernetice. Este important ca utilizatorii să fie conștienți de aceste riscuri și să ia măsuri pentru a-și proteja sistemele și rețelele.
+
+
+
+Pentru a identifica vulnerabilitățile de securitate: Un pentest poate ajuta o organizație să identifice vulnerabilitățile de securitate care ar putea fi exploatate de atacatori.
+
+Pentru a îmbunătăți securitatea: Un pentest poate ajuta o organizație să își îmbunătățească securitatea prin identificarea vulnerabilităților și luarea măsurilor necesare pentru a le închide.
+
+Pentru a verifica eficiența măsurilor de securitate: Un pentest poate ajuta o organizație să verifice dacă măsurile de securitate actuale sunt eficiente în protejarea împotriva atacurilor cibernetice.
+
+Pentru a pregăti o organizație pentru atacuri cibernetice: Un pentest poate ajuta o organizație să se pregătească pentru atacuri cibernetice prin identificarea vulnerabilităților și luarea măsurilor necesare pentru a le închide.
+
+În general, un pentest poate fi o parte importantă a planului de apărare cibernetică al unei organizații, ajutând la identificarea vulnerabilităților și la îmbunătățirea securității sistemelor și rețelelor
+
+
+
+
+
+Un test de penetrare sau pentest este o evaluare a securității sistemelor și rețelelor prin intermediul simularii unui atac cibernetic. Scopul unui pentest este de a identifica vulnerabilitățile de securitate înainte ca acestea să fie exploatate de atacatori reali. Acest lucru poate ajuta la îmbunătățirea securității sistemelor și poate reduce riscul de a fi victime ale unui atac cibernetic.
+
+Există o serie de motive pentru care o organizație ar putea avea nevoie de un pentest:
+
+Pentru a determina nivelul de securitate al sistemelor și rețelelor: Un pentest poate ajuta o organizație să își dea seama de punctele slabe de securitate ale sistemelor și rețelelor sale.
+
+Pentru a identifica vulnerabilitățile de securitate: Un pentest poate ajuta o organizație să identifice vulnerabilitățile de securitate care ar putea fi exploatate de atacatori.
+
+Pentru a îmbunătăți securitatea: Un pentest poate ajuta o organizație să își îmbunătățească securitatea prin identificarea vulnerabilităților și luarea măsurilor necesare pentru a le închide.
+
+Pentru a verifica eficiența măsurilor de securitate: Un pentest poate ajuta o organizație să verifice dacă măsurile de securitate actuale sunt eficiente în protejarea împotriva atacurilor cibernetice.
+
+Pentru a pregăti o organizație pentru atacuri cibernetice: Un pentest poate ajuta o organizație să se pregătească pentru atacuri cibernetice prin identificarea vulnerabilităților și luarea măsurilor necesare pentru a le închide.
+
+În general, un pentest poate fi o parte importantă a planului de apărare cibernetică al unei organizații, ajutând la identificarea vulnerabilităților și la îmbunătățirea securității sistemelor și rețelelor.
+
+
+
+
+Există o serie de metode și soluții de test de penetrare (pentest) care pot fi folosite în apărarea cibernetică. Acestea pot varia în funcție de scopul pentestului și de nivelul de acces permis atacatorilor simulati. Iată câteva exemple:
+
+Pentestul manual: Acest tip de pentest implică utilizarea de către un experț în securitate a unui set de instrumente și tehnici pentru a evalua securitatea sistemelor și rețelelor.
+
+Pentestul automatizat: Acest tip de pentest implică utilizarea unor programe sau instrumente automatizate pentru a simula atacuri cibernetice și pentru a identifica vulnerabilitățile de securitate.
+
+Pentestul de tip black box: Acest tip de pentest presupune că atacatorii simulati nu au acces la informații despre sistemele și rețelele pe care le atacă. Ei sunt obligați să descopere aceste informații în timpul procesului de atac.
+
+Pentestul de tip white box: Acest tip de pentest presupune că atacatorii simulati au acces la informații detaliate despre sistemele și rețelele pe care le atacă.
+
+Soluțiile de pentest pot include, de asemenea, instrumente și programe pentru a automatiza procesul de evaluare a securității, precum și pentru a oferi rapoarte detaliate despre rezultatele testelor.
+
+În general, alegerea metodei și a soluției de pentest adecvate depinde de scopul pentestului și de nevoile specifice ale unei organizații în ceea ce privește apărarea cibernetică. Este important ca o organizație să evalueze aceste aspecte înainte de a alege o metodă sau o soluție de pentest.
+
+
+
+Cyber Security plays an important role in the field of information technology .Securing the information have become one of the biggest  challenges in the present day. When ever  we think about the cyber security the first thing that comes to our mind is ‘cyber crimes’ which are increasing immensely day by day. Various Governments and companies are taking many measures in order to  prevent these cyber crimes. Besides various measures cyber security is still a very big concern to many. This paper mainly focuses on challenges faced by cyber security on the latest technologies .It also focuses on latest about the cyber security techniques, ethics and the trends changing the face of cyber security. 
+
+
+
+Cybersecurity is the practice of protecting systems, networks, and programs from digital attacks. These cyberattacks are usually aimed at accessing, changing, or destroying sensitive information; extorting money from users; or interrupting normal business processes.
+
+Implementing effective cybersecurity measures is particularly challenging today because there are more devices than people, and attackers are becoming more innovative.
+
+
+A successful cybersecurity approach has multiple layers of protection spread across the computers, networks, programs, or data that one intends to keep safe. In an organization, the people, processes, and technology must all complement one another to create an effective defense from cyber attacks. A unified threat management system can automate integrations across select Cisco Security products and accelerate key security operations functions: detection, investigation, and remediation.
+
+
+In the past decade, we have reached exponential technological advancement. With rising growth in the cyber world come cyber security problems. Cybercriminals have responded by adapting their strategies to the new environment, giving rise to immense cybersecurity challenges.
+
+
+Penetration testing tools are used as a part of a penetration test to automate certain tasks, improve efficiency and discover issues that might be difficult to find using manual analysis technique alone.
+
+Penetration  testing   is  one of  the  most  efficient  approaches  for the  process  of  security  assessment.  It  can accurately examine the effectiveness of  security measures  implemented on the system  being  inspected.  With a  wide variety of supporting tools available in the market, it is confusing for practitioners to make proper informed decisions when looking for suitable tools.

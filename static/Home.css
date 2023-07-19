@@ -1,0 +1,74 @@
+ .u-section-1 {
+  background-image: linear-gradient(0deg, rgba(0,0,0,0.9), rgba(0,0,0,0.9)), url("images/896796.jpg");
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 1424px;
+}
+
+.u-section-1 .u-sheet-1 {
+  min-height: 1120px;
+}
+
+.u-section-1 .u-text-1 {
+  font-family: Wallpoet;
+  text-transform: uppercase;
+  margin: 0 auto;
+}
+
+.u-section-1 .u-form-1 {
+  height: 171px;
+  width: 312px;
+  margin: 0 auto 60px;
+}
+
+.u-section-1 .u-label-1 {
+  font-family: Wallpoet;
+  text-transform: uppercase;
+}
+
+.u-section-1 .u-btn-1 {
+  font-family: Wallpoet;
+  border-style: solid;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 924px;
+  }
+
+  .u-section-1 .u-text-1 {
+    margin-top: 60px;
+  }
+
+  .u-section-1 .u-form-1 {
+    width: 570px;
+  }
+}
+
+@media (max-width: 991px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 708px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 531px;
+  }
+
+  .u-section-1 .u-form-1 {
+    width: 540px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 334px;
+  }
+
+  .u-section-1 .u-form-1 {
+    width: 340px;
+  }
+}

