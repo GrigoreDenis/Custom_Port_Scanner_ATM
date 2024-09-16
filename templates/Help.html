@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Automated Pentest FrameworkTutorial">
+    <meta name="description" content="">
+    <title>Help</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='nicepage.css') }}" media="screen">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Help.css') }}">
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='nicepage.js') }}" defer=""></script>
+    <meta name="generator" content="Nicepage 5.10.8, nicepage.com">
+    <meta name="referrer" content="origin">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i|Wallpoet:400|Kumar+One+Outline:400">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/10764381.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Main Framework">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-7953"><a href="{{ url_for('main') }}" class="u-image u-logo u-image-1" title="Home" data-image-width="624" data-image-height="620">
+        <img src="{{ url_for('static', filename='images/10764381.png') }} " class="u-logo-image u-logo-image-1">
+      </a><p class="u-align-left u-custom-font u-text u-text-palette-4-base u-text-1">Automate​d Pentest Framework<br>
+      </p><nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+        <div class="menu-collapse u-custom-font" style="font-size: 1.25rem; letter-spacing: 0px; font-family: Wallpoet; font-weight: 400; text-transform: uppercase;">
+          <a class="u-button-style u-custom-border u-custom-border-color u-custom-borders u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('main') }}" style="padding: 22px 0px;">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Finder') }}" style="padding: 22px 0px;">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('CVE_classification') }}" style="padding: 22px 0px;">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Fuzzing') }}" style="padding: 22px 0px;">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('History') }}" style="padding: 22px 0px;">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Help') }}" style="padding: 22px 0px;">Help</a>
+</li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('main') }}">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Finder') }}">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('CVE_classification') }}">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Fuzzing') }}">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('History') }}">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Help') }}">Help</a>
+</li></ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+      </nav></header>
+    <section class="u-black u-clearfix u-section-1" id="sec-c527">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-1">
+          <div class="fr-wrapper" dir="auto">
+            <div class="fr-element fr-view" dir="auto" spellcheck="true">
+              <h1 style="line-height: 0.76;">
+                <span class="u-custom-font u-font-courier-new" style="font-size: 3rem;">Automated Pentest Framework<br>Tutorial
+                </span>
+              </h1>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">1. Main Framework:&nbsp;</span>
+                </span>
+              </p>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.1 Introduce the target network inside the given text edit area,&nbsp;</span>
+                </span>
+              </p>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.2 Select the type of scan (required),&nbsp;<img src="{{ url_for('static', filename='images/main.png') }}" align="center" style="width: 686px;" class="fr-dii fr-fic fr-fil" width="560">
+                  </span>
+                </span>
+              </p>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.3 Select the number of threads the scanning is going to run with (more threads than cores can result in slower results, default 5, minimum 1, maximum 100),&nbsp;</span>
+                </span>
+              </p>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.4 Select "Global timeout" which affect every TCP or UDP connection timeout, given timeout does not leave the scanning phase.</span>
+                </span>
+              </p>
+              <p style="text-align: left; line-height: 0.79;">
+                <span>
+                  <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.5 Port range can be left "empty" and the scanner will use top 1000 most common TCP/UDP ports, otherwise it can use a varying range of ports such as: single ones: "80", multiple ones: "80,443", array like input: "80-500", hybrid input: "80-500,8080,8088-9000".</span>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div class="fr-second-toolbar">
+            <br>
+          </div>
+        </div>
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-2">
+          <p style="line-height: 0.81; text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp;1.5 Checkalive output gives the state the given hosts are in (either online or offline), their operating sys<img src="{{ url_for('static', filename='images/main_frame_extedned_help_merged.png') }}" align="center" style="width: 692px;" class="fr-dii fr-fic fr-fir" width="570">tem as well as their hostname if we have a DNS response.
+            </span>
+          </p>
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.6 Port scanner output gives us the state the open/filtered scanned ports are in as well as their service and version.</span>
+          </p>
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.7 Fingerprinter output gives us the technology and version that runs at that time on a port which exposes a http or https service.</span>
+          </p>
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 1.8 CVE Finder output is the results of the modules that tests for CVE's. It gives swift information about the host, port, technology, version, CVE name, cvss score and other details.</span>
+          </p>
+          <p style="text-align: left;">
+            <br>
+          </p>
+        </div>
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-3">
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">2. Finder module uses OSINT tools in order to find as much information about the target host from the internet.<img src="{{ url_for('static', filename='images/finder1.png') }}" align="center" style="width: 680px;" class="fr-dii fr-fic fr-fil" width="570">
+            </span>
+          </p>
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp; 2.1 WHOIS (pronounced as the phrase "who is") is a query and response protocol that is widely used for querying databases that store the registered users or assignees of an Internet resource, such as a domain name, an IP address block or an autonomous system, but is also used for a wider range of other information.&nbsp;</span>
+          </p>
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">&nbsp; &nbsp;&nbsp;</span>
+          </p>
+          <p style="text-align: left;">
+            <br>
+          </p>
+        </div>
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-4">
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">3. CVE Classification is used to find more info about a given vulnerability such<img src="{{ url_for('static', filename='images/cve_class.png') }}" align="center" style="width: 779px;" class="fr-dii fr-fic fr-fir" width="570">&nbsp;as the probability for it to be expolited, the EPSS score and the date it was discovered. The input can be given by enumerating the CVE's names like "CVE-2022-27225,CVE-2022-27223" or be left empty for TOP 100. 
+            </span>
+          </p>
+          <p style="text-align: left;">
+            <br>
+          </p>
+        </div>
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-5">
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">4. Fuzzing module is us<img src="{{ url_for('static', filename='images/dictionaries1.png') }}" align="center" style="width: 747px;" class="fr-dii fr-fic fr-fil" width="570">ed to use in a fuzzing attack different dicitonaries from our default or by uploading a custom dictionary, the output of our modules is a dirbuster set on "silent" to avoid clutering the output and be given only the necessary information about the process.
+            </span>
+          </p>
+          <p style="text-align: left;">
+            <br>
+          </p>
+        </div>
+        <div class="fr-view u-align-center u-clearfix u-rich-text u-text u-text-6">
+          <p style="text-align: left;">
+            <span class="u-custom-font u-font-courier-new">5. &nbsp;History is the module that allows you to see the past activty of&nbsp;<img src="{{ url_for('static', filename='images/history.png') }}" align="center" style="width: 732px;" class="fr-dii fr-fic fr-fir" width="570">the framework and select hosts to be retested. Each host is a link that sends you to the main framework module in order to retry a pentest where you can either override or save a new report of the pentest. The table in history shows us the date and time at which the report has been created, the number of CVE's found on the host, the enumerator results from the "dictionary" module and the open ports found by the port scanner in main framework.
+            </span>
+          </p>
+          <p style="text-align: left;">
+            <br>
+          </p>
+        </div>
+      </div>
+    </section>
+    
+  
+</body></html>

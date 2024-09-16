@@ -1,0 +1,15 @@
+Following url is a valid HTTP service {{URL[0]}}
+Got response status: 200
+
+{{URL[0]}}: Got success code:200
+Technology used given by WhatWeb output for port {{PORT[0]}} : {{TECHNOLOGY[0]}}/{{VERSION[0]}}
+
+
+Following url is a valid HTTP service {{URL[1]}}
+Got response status: 200
+
+{{URL[1]}}: Got success code:200
+Technology used given by WhatWeb output for port 8188 : {{TECHNOLOGY[1]}}/{{VERSION[1]}}
+
+
+[{{URL[0]}}, {{URL[1]}}]

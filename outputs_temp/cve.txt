@@ -1,0 +1,28 @@
+The following host: 127.0.0.1
+Technology: Apache
+Version: 2.4.49
+Port: 8088
+Vulnerable to cves/2021/CVE-2021-41773.yaml
+ID:
+Name:
+Description:
+cvss-score:
+Severity:
+Payload:
+Response:
+
+
+
+
+
+The following host: 127.0.0.1
+Technology: Apache
+Version: 2.4.49
+Port: 8188
+Vulnerable to cves/2021/CVE-2021-41773.yaml
+
+The following host: 127.0.0.1
+Technology: Apache
+Version: 2.4.49
+Port: 8188
+Vulnerable to cves/2021/CVE-2021-42013.yaml

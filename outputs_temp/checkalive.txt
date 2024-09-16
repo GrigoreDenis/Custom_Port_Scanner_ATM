@@ -1,0 +1,10 @@
+Network given:
+{{NETWORK}}
+Timestamp:
+{{TIMESTAMP}}
+Hosts given:
+{{IP_LIST}}
+ 
+We found host {{IP[0]}} to have DNS response: {{DNS_RESULTS[0]}}
+{{IP[0]}} is Online
+With operating system {{OS}}:

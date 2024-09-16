@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html style="font-size: 16px;" lang="en"><head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <title>Fuzzing</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='nicepage.css') }}" media="screen">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Fuzzing.css') }}">
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}" defer=""></script>
+    <script class="u-script" type="text/javascript" src="{{ url_for('static', filename='nicepage.js') }}" defer=""></script>
+    <meta name="generator" content="Nicepage 5.10.8, nicepage.com">
+    <meta name="referrer" content="origin">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    <link id="u-page-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i|Wallpoet:400|Kumar+One+Outline:400">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/10764381.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Main Framework">
+    <meta property="og:type" content="website">
+  <meta data-intl-tel-input-cdn-path="intlTelInput/"></head>
+  <body class="u-body u-xl-mode" data-lang="en"><header class="u-clearfix u-custom-color-2 u-header u-header" id="sec-7953"><a href="{{ url_for('main') }}" class="u-image u-logo u-image-1" title="Home" data-image-width="624" data-image-height="620">
+        <img src="{{ url_for('static', filename='images/10764381.png') }} " class="u-logo-image u-logo-image-1">
+      </a><p class="u-align-left u-custom-font u-text u-text-palette-4-base u-text-1">Automate​d Pentest Framework<br>
+      </p><nav class="u-menu u-menu-one-level u-offcanvas u-menu-1">
+        <div class="menu-collapse u-custom-font" style="font-size: 1.25rem; letter-spacing: 0px; font-family: Wallpoet; font-weight: 400; text-transform: uppercase;">
+          <a class="u-button-style u-custom-border u-custom-border-color u-custom-borders u-custom-left-right-menu-spacing u-custom-padding-bottom u-custom-text-active-color u-custom-text-color u-custom-text-hover-color u-custom-top-bottom-menu-spacing u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="#">
+            <svg class="u-svg-link" viewBox="0 0 24 24"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#menu-hamburger"></use></svg>
+            <svg class="u-svg-content" version="1.1" id="menu-hamburger" viewBox="0 0 16 16" x="0px" y="0px" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"><g><rect y="1" width="16" height="2"></rect><rect y="7" width="16" height="2"></rect><rect y="13" width="16" height="2"></rect>
+</g></svg>
+          </a>
+        </div>
+        <div class="u-custom-menu u-nav-container">
+          <ul class="u-custom-font u-nav u-spacing-20 u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('main') }}" style="padding: 22px 0px;">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Finder') }}" style="padding: 22px 0px;">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('CVE_classification') }}" style="padding: 22px 0px;">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Fuzzing') }}" style="padding: 22px 0px;">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('History') }}" style="padding: 22px 0px;">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-4-base u-text-grey-40 u-text-hover-palette-4-light-2" href="{{ url_for('Help') }}" style="padding: 22px 0px;">Help</a>
+</li></ul>
+        </div>
+        <div class="u-custom-menu u-nav-container-collapse">
+          <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
+            <div class="u-inner-container-layout u-sidenav-overflow">
+              <div class="u-menu-close"></div>
+              <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('main') }}">Main Framework</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Finder') }}">Finder</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('CVE_classification') }}">CVE classification</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Fuzzing') }}">Fuzzing</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('History') }}">History</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="{{ url_for('Help') }}">Help</a>
+</li></ul>
+            </div>
+          </div>
+          <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
+        </div>
+      </nav></header>
+    <section class="u-clearfix u-image u-shading u-section-1" id="sec-c527" data-image-width="1920" data-image-height="1080">
+      <div class="u-clearfix u-sheet u-sheet-1">
+        <div class="u-form u-form-1">
+          <form method="POST" action="{{ url_for('start_fuzzing') }}" class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" name="form" style="padding: 0px;" >
+            <div class="u-form-group u-form-url u-label-top u-form-group-1">
+              <label for="url-2469" class="u-custom-font u-label u-text-palette-4-base u-label-1">URL Target</label>
+              <input type="url" placeholder="http://127.0.0.1:8088/,http://localhost:8188/" id="url-2469" name="url_target" class="u-black u-border-2 u-border-palette-4-base u-input u-input-rectangle u-radius-50 u-text-palette-4-base" required="">
+            </div>
+            <!-- <p class="u-custom-font u-form-group u-form-text u-text u-text-palette-4-base u-text-1"> Select our default dictionaries</p> -->
+            <div class="u-form-checkbox-group u-form-group u-label-top u-form-group-3">
+              <label class="u-custom-font u-label u-text-palette-4-base u-label-2">Select our default dictionaries</label>
+              <div class="u-form-checkbox-group-wrapper">
+                <div class="u-input-row">
+                  <input id="field-0983" type="checkbox" name="dictionary_checkbox1" value="default_dictionary_10k_directories.txt" class="u-active-palette-4-base u-border-2 u-border-palette-4-base u-field-input u-hover-palette-4-light-2" data-calc="default_dictionary_10k_directories.txt">
+                  <label class="u-custom-font u-field-label u-font-courier-new" for="field-0983" style="">default_dictionary_10k_directories.txt</label>
+                </div>
+                <div class="u-input-row">
+                  <input id="field-483c" type="checkbox" name="dictionary_checkbox2" value="default_php_files_only.txt" class="u-active-palette-4-base u-border-2 u-border-palette-4-base u-field-input u-hover-palette-4-light-2" data-calc="default_php_files_only.txt">
+                  <label class="u-custom-font u-field-label u-font-courier-new" for="field-483c" style="">default_php_files_only.txt</label>
+                </div>
+                <div class="u-input-row">
+                  <input id="field-0cbf" type="checkbox" name="dictionary_checkbox3" value="default_php_files_with_path.txt" class="u-active-palette-4-base u-border-2 u-border-palette-4-base u-field-input u-hover-palette-4-light-2" data-calc="default_php_files_with_path.txt">
+                  <label class="u-custom-font u-field-label u-font-courier-new" for="field-0cbf" style="">default_php_files_with_path.txt</label>
+                </div>
+              </div>
+            </div>
+            <div class="u-align-left u-form-group u-form-submit u-label-top">
+              <input type="submit" value="Fuzzing" class="u-active-palette-4-base u-black u-border-2 u-border-active-black u-border-hover-black u-border-palette-4-base u-btn u-btn-round u-btn-submit u-button-style u-custom-font u-hover-palette-4-base u-radius-50 u-text-active-black u-text-hover-black u-text-palette-4-base u-btn-1">
+              <!-- <a href="#" class="u-active-palette-4-base u-black u-border-2 u-border-active-black u-border-hover-black u-border-palette-4-base u-btn u-btn-round u-btn-submit u-button-style u-custom-font u-hover-palette-4-base u-radius-50 u-text-active-black u-text-hover-black u-text-palette-4-base u-btn-1">BUST</a> -->
+            </div>
+
+          </form>
+        <form method="POST" action="{{ url_for('start_fuzzing_custom') }}" class="u-clearfix u-form-spacing-28 u-form-vertical u-inner-form" name="form" style="padding: 0px;" enctype="multipart/form-data">
+          <div class="u-input-row">
+            <label class="u-custom-font u-field-label u-font-courier-new" for="field-0cbf" >Choose your own dictionary: </label>
+            <input class="upload-btn" type="file" name="file_upload">
+          </div>
+          <div class="u-align-left u-form-group u-form-submit u-label-top">
+            <input type="submit" value="Upload custom dictionary" class="u-active-palette-4-base u-black u-border-2 u-border-active-black u-border-hover-black u-border-palette-4-base u-btn u-btn-round u-btn-submit u-button-style u-custom-font u-hover-palette-4-base u-radius-50 u-text-active-black u-text-hover-black u-text-palette-4-base u-btn-1">
+          </div>
+        </form>
+
+        </div>
+        <div class="u-black u-border-2 u-border-grey-75 u-container-style u-expanded-width u-group u-opacity u-opacity-70 u-shape-rectangle u-group-1">
+          <div class="u-container-layout u-valign-top u-container-layout-1">
+            <p class="u-align-center u-custom-font u-text u-text-default u-text-palette-4-base u-text-2">Dirbuster output:</p>
+            <p class="u-align-left u-custom-font u-font-courier-new u-text u-text-custom-color-6 u-text-3">
+              {% autoescape false %}
+              {{ fuzzing_output_arg }}
+              {% endautoescape %}
+              <!-- <span class="u-text-palette-3-base"> ST</span>
+              <span class="u-text-palette-3-base">ART_TIME: Tue May 16 10:06:22 2023 </span>
+              <br>URL_BASE: http://127.0.0.1:8088/ <br>WORDLIST_FILES: <span class="u-text-palette-3-base">wordlists/default_dictionary_10k_directories.txt</span>
+              <br>
+              <br>---- Scanning URL: http://127.0.0.1:8088/ ---- <br>+ http://127.0.0.1:8088/.. (CODE:200|SIZE:870) <br>+ http://127.0.0.1:8088/. (CODE:200|SIZE:870) <br>+ http://127.0.0.1:8088/index.html (CODE:200|SIZE:870) <br>
+              <br>----------------- <br>END_TIME: Tue May 16 10:06:26 2023 <br>DOWNLOADED: 9993 - FOUND: 3 <br>
+              <br>
+              <span class="u-text-palette-3-base">START_TIME: Tue May 16 10:06:26 2023</span>
+              <br>URL_BASE: http://127.0.0.1:8188/ <br>WORDLIST_FILES: <span class="u-text-palette-3-base">wordlists/default_dictionary_10k_directories.txt</span>
+              <br>OPTION: Silent Mode <br>
+              <br>----------------- <br>
+              <br>GENERATED WORDS: 9993 <br>
+              <br>---- Scanning URL: http://127.0.0.1:8188/ ---- <br>+ http://127.0.0.1:8188/.. (CODE:200|SIZE:872) <br>+ http://127.0.0.1:8188/. (CODE:200|SIZE:872) <br>+ http://127.0.0.1:8188/index.html (CODE:200|SIZE:872) <br>
+              <br>----------------- <br>END_TIME: Tue May 16 10:06:30 2023 <br>DOWNLOADED: 9993 - FOUND: 3 <br> -->
+
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+  
+</body></html>
